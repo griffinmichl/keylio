@@ -1,0 +1,24 @@
+{
+  "name": "keystroke",
+  "version": "0.0.1",
+  "description": "keystroke profiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gm758/keystroke.git"
+  },
+  "keywords": [
+    "keystroke",
+    "cycle",
+    "rx"
+  ],
+  "author": "Griffin Michl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gm758/keystroke/issues"
+  },
+  "homepage": "https://github.com/gm758/keystroke#readme"
+}
