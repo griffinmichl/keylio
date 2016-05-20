@@ -8,7 +8,9 @@ import {
 import { Observable } from 'rx'
 import keycode from 'keycode'
 import R from 'ramda'
+import { Map, List, fromJS } from 'immutable'
 
+// TODO: modify constants and getCharInRange to make model + intent pure
 const FIRST_CHARCODE = 65
 const LAST_CHARCODE = 91
 
@@ -17,11 +19,15 @@ function getCharInRange(first, last) {
   return charactersInRange(first, last)
 }
 
-function arrayToStorageObject(arr) {
+function charsToStorageObject(arr) {
   return arr.reduce((objectSoFar, arrayElement) => {
     objectSoFar[arrayElement] = []
     return objectSoFar
   }, {})
+}
+
+function createImmutableCharStore(first, last) {
+  return R.compose(fromJS, charsToStorageObject, getCharInRange)(first, last)
 }
 
 function eventToObject(e) {
@@ -31,57 +37,56 @@ function eventToObject(e) {
   }
 }
 
-function eventObjIsChar({ key }) {
-  const firstLetter = 'a'
-  const lastLetter = 'z' 
-  return key.length === 1 &&
-         key >= firstLetter &&
-         key <= lastLetter
+function createCharObservable(DOM, event, char) {
+  return DOM
+    .select(':root')
+    .events(event)
+    .map(eventToObject)
+    .filter(x => x.key === char)
 }
 
+function downUpTupleToDwell([down, up]) {
+  return {
+    key: down.key,
+    dwell: up.time - down.time,
+  }
+}
+
+function createDwellTime(keydown$, keyup$) {
+  return Observable.zip(keydown$, keyup$)
+    .map(downUpTupleToDwell) 
+}
+
+function charToDwell(DOM, char) {
+  const keydown$ = createCharObservable(DOM, 'keydown', char)
+  const keyup$ = createCharObservable(DOM, 'keyup', char)
+  return createDwellTime(keydown$, keyup$)
+}
 
 function intent(DOM) {
   const chars = getCharInRange(FIRST_CHARCODE, LAST_CHARCODE)
   // TODO: factor out zipping to own function
   // TODO: can we make keystroke of the form ([key, elapsedTime])?
-  const keystroke$ = chars.reduce((acc$, char) => 
-    acc$.merge(Observable.zip(
-      DOM
-        .select(':root')
-        .events('keydown')
-        .map(eventToObject)
-        .filter(obj => obj.key === char),
-      DOM
-        .select(':root')
-        .events('keyup')
-        .map(eventToObject)
-        .filter(obj => obj.key === char)
-  )), Observable.empty())
+
+  const keystroke$ = chars.reduce(
+    (acc$, char) => acc$.merge(charToDwell(DOM, char)),
+    Observable.empty()
+  )
 
   return {
     keystroke$,
   }
 }
 
-function dwellTimeFromKeystroke(keystroke) {
-  return {
-    key: keystroke[0].key,
-    dwell: keystroke[1].time - keystroke[0].time
-  }
-}
-
 function model({ keystroke$ }) {
   // TODO: switch to immutable maps of lists for cleaner scanning
-  const keyStrokeDataStore = 
-    R.compose(arrayToStorageObject, getCharInRange)(FIRST_CHARCODE, LAST_CHARCODE)
+  const keyStrokeDataStore = createImmutableCharStore(FIRST_CHARCODE, LAST_CHARCODE)
 
   const dwellTime$ = keystroke$
-    .map(dwellTimeFromKeystroke)
     .startWith(keyStrokeDataStore)
-    .scan((acc, cur) => {
-      acc[cur.key] = acc[cur.key].concat(cur.dwell)
-      return acc
-    }).do(console.log.bind(console))
+    .scan((acc, cur) =>
+      acc.map((val, key) => key === cur.key ? val.push(cur.dwell) : val)
+    ).do(console.log.bind(console))
 
   return {
     state$: dwellTime$, 
