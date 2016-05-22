@@ -64,9 +64,7 @@
   width: 100%;
 }
  
-.title {
-  text-align: center;
-}
+
 
 .offset-1 {
   margin-left: 8.33%;
@@ -116,3 +114,29 @@
   margin-left: 100%;
 }
 
+.title {
+  text-align: center;
+}
+
+.word {
+  font-size: 120%;
+  padding: 0 0.2em;
+}
+
+.selected {
+  background-color: LightGreen;
+  border-radius: 15%;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+.prompt {
+  overflow: hidden;
+  word-break: break-all;
+}

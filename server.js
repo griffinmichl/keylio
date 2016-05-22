@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 8080
+const randomWords = require('random-words')
 
 // using webpack-dev-server and middleware in development environment
 if(process.env.NODE_ENV !== 'production') {
@@ -22,7 +23,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/prompt', (req, res) => {
-  res.send('It was the best of times it was the worst of times')
+  const prompt = randomWords({ exactly: 50, join: ' ' })
+  res.send(prompt)
 })
 
 app.listen(PORT, (error) => {
