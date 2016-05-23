@@ -19,12 +19,16 @@ if(process.env.NODE_ENV !== 'production') {
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/dist/index.html')
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 })
 
 app.get('/api/prompt', (req, res) => {
   const prompt = randomWords({ exactly: 50, join: ' ' })
   res.send(prompt)
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 })
 
 app.listen(PORT, (error) => {
