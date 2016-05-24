@@ -20,22 +20,30 @@ function parseKeyEvent(e) {
 
 
 export default function intent(interactions, lifecycles) {
-  const keydown$ = interactions
-    .get('keydown')
-
   const keyup$ = interactions
     .get('keyup')
-    
+    .map(parseKeyEvent)
+
+  const keydown$ = interactions
+    .get('keydown')
+    .map(parseKeyEvent)
+    .distinctUntilChanged(ev => ev.key)
+    .takeUntil(keyup$).repeat()
+
+  const keydown1$ = interactions
+    .get('keydown')
+    .map(parseKeyEvent)
+    .distinctUntilChanged(ev => ev.key)
+  keydown1$.subscribe(x => console.log('keydown', x))
 
   const keystroke$ = characters.reduce((acc$, char) =>
     acc$.merge(Observable.zip(
       keydown$
-        .map(parseKeyEvent)
         .filter(ev => ev.key === char),
       keyup$
-        .map(parseKeyEvent)
         .filter(ev => ev.key === char)
     )), Observable.empty())
+    .do(console.log.bind(console))
     .map(getDwellTime)
 /*
   const char$ = keyup$
@@ -47,6 +55,7 @@ export default function intent(interactions, lifecycles) {
     .filter(char => char === 'space')
 
   const word$ = char$.buffer(() => space$)
+
 */
 
   const componentDidMount$ = lifecycles.componentDidMount

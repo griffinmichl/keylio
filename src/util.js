@@ -29,3 +29,21 @@ export function focusSpan(node) {
     .forEach(span => node.appendChild(span))
 }
 
+export function median(nums) {
+  const sortedNums = nums.slice().sort((a, b) => a - b)
+  const middleIndex = Math.floor(sortedNums.length / 2)
+  if (sortedNums.length % 2 === 0) {
+    return (sortedNums[middleIndex - 1] + sortedNums[middleIndex]) / 2
+  } else {
+    return sortedNums[middleIndex]
+  }
+}
+
+export function processPressTimes(obj) {
+  return Object
+    .keys(obj)
+    .reduce((arr, key) => {
+      const value = median(obj[key]) || 0
+      return arr.concat({ key, value })
+    }, [])
+}

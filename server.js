@@ -22,6 +22,15 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 })
 
+app.post('/api/test', (req, res) => {
+  let body
+  req.on('data', (chunk) => {
+    console.log('1')
+    body += chunk
+  })
+  req.on('end', () => console.log(body))
+})
+
 app.get('/api/prompt', (req, res) => {
   const prompt = randomWords({ exactly: 50, join: ' ' })
   res.send(prompt)
