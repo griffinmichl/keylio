@@ -37,6 +37,7 @@
     "express": "^4.13.4",
     "immutable": "^3.8.1",
     "keycode": "^2.1.1",
+    "mongodb": "^2.1.19",
     "ramda": "^0.21.0",
     "random-words": "0.0.1",
     "react": "^15.1.0",

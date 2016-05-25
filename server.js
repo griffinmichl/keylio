@@ -3,6 +3,9 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 8080
 const randomWords = require('random-words')
+const db = require('./db/db')
+const { getLetter } = require('./db/model/dwell')
+
 
 // using webpack-dev-server and middleware in development environment
 if(process.env.NODE_ENV !== 'production') {
@@ -40,10 +43,20 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 })
 
-app.listen(PORT, (error) => {
-  if (error) {
-    console.error(error)
+db.connect(function(err) {
+  if (err) {
+    console.log('Unable to connect to Mongo.')
+    process.exit(1)
   } else {
-    console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT)
+    app.listen(PORT, (error) => {
+      if (error) {
+        console.error(error)
+      } else {
+        getLetter('a', (e, r) => {
+        console.log(e,r)
+        console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT)
+        })
+      }
+    })
   }
 })
