@@ -43,7 +43,11 @@ export function processPressTimes(obj) {
   return Object
     .keys(obj)
     .reduce((arr, key) => {
-      const value = median(obj[key]) || 0
-      return arr.concat({ key, value })
+      if (typeof obj[key] === 'number') {
+        return arr.concat({ key, value: obj[key] })
+      } else {
+        const value = median(obj[key]) || 0
+        return arr.concat({ key, value })
+      }
     }, [])
 }

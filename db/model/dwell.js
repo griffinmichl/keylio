@@ -1,6 +1,6 @@
 const db = require('../db')
 
-exports.increment = (char, time, cb) => {
+exports.incrementLetter = (char, time, cb) => {
   const collection = db.get().collection('dwell')
   const address = `times.${time}`
   collection
@@ -8,18 +8,31 @@ exports.increment = (char, time, cb) => {
     .exec(cb)
 }
 
-exports.getLetter = (char, cb) => {
+exports.getAllLetters = (cb) => {
   const collection = db.get().collection('dwell')
-  collection.findOne({ character: char }, (err, result) => {
+  collection.find().toArray((err, result) => {
     if (err) {
       console.log('error retrieving', char)
+      cb(err, null)
     } else {
-      const resultsArray = []
-      const { times } = result
-      for (let key in times) {
-        resultsArray[parseInt(key, 10)] = times[key]
-      }
-      cb(resultsArray)
+      const countData = result.reduce((countObj, currentObj) => {
+        const { character } = currentObj
+        countObj[character] = createCountArray(currentObj)
+        return countObj
+      }, {})
+
+      cb(null, countData)
     } 
   })
+}
+
+function createCountArray(obj) {
+  const countArray = []
+  const { times } = obj 
+
+  for (let stamp in times) {
+    countArray[parseInt(stamp, 10)] = times[stamp]
+  }
+
+  return countArray
 }

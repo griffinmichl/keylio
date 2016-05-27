@@ -1,27 +1,36 @@
 function median(counts) {
   let left = 0
   let right = counts.length - 1
-  while (left <= right) {
-    if (counts[left] > 0) {
-      counts[left]--
-    }
+  
+  const allZeros = counts
+    .reduce((bool, num) => num === 0 & bool, true)
 
-    if (counts[right] > 0) {
-      counts[right]--
-    }
+  if (allZeros) {
+    return 0
+  } 
 
-    if (counts[left] === 0) {
+  let prevLeft = 0
+  let prevRight = 0 
+  while (left < right) {
+    prevLeft = left
+    prevRight = right
+
+    while (counts[left] === 0) {
       left++
     }
-    if (counts[right] === 0) {
+
+    while (counts[right] === 0) {
       right--
     }
+    
+    counts[left]--
+    counts[right]--
   } 
 
   if (left === right) {
     return left
   } else {
-    return (left + right) / 2
+    return (prevLeft + prevRight) / 2
   }
 }
 
@@ -34,5 +43,10 @@ function mean(counts) {
     .reduce((a, b) => a + b)
 
   return sum / size
+}
+
+module.exports = {
+  median,
+  mean,
 }
 

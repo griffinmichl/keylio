@@ -3,21 +3,14 @@ import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3'
 import { processPressTimes, median } from '../util'
 
-export default function generateKeyboard(pressTimes) {
-  const margin = {top: 50, right: 0, bottom: 100, left: 30}
-  const height = 600
-  const width = 960
-  //const width = d3.select('#keyboard')[0][0].clientWidth - margin.left - margin.right
-  //const height = d3.select('#keyboard')[0][0].clientWidth * 0.98 - margin.top - margin.bottom
-  const gridSize = Math.floor(height / 10) //10 keys map for simple version
+export default function generateKeyboard(pressTimes, size) {
+  const width = size.width / 1.7
+  const height = size.height
+  const gridSize = Math.floor(width / 10) //10 keys map for simple version
   // const legendElementHeight = gridSize*3
   // const buckets = 9 //number of color buckets. TODO: increase, update color scheme
   const colors = ['#ffffcc','#c7e9b4','#7fcdbb','#41b6c4','#2c7fb8','#253494']
-  // const characters = _.range(65, 91).map(charCode => String.fromCharCode(charCode))
-  // const charHash = characters.reduce((hash, char) => {
-  //   hash[char] = true
-  //   return hash
-  // }, {})
+
   const keyVals = [{key: 'q', row: 0, col: 0},
                     {key: 'w', row: 0, col: 1},
                     {key: 'e', row: 0, col: 2},
@@ -47,15 +40,15 @@ export default function generateKeyboard(pressTimes) {
 
   const processedPressTimes = processPressTimes(pressTimes)
 
-  const fauxKeyboard = ReactFauxDOM.createElement('div')
+  const fauxKeyboard = ReactFauxDOM.createElement('svg')
+
   const svg = d3
     .select(fauxKeyboard)
-    .append('svg')
-    .attr('class', 'transitionChart')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
+    .attr('class', 'keyboard')
+    .attr('width', width)
+    .attr('height', height)
     .append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`)
+    .attr('transform', `translate(${0}, ${0})`)
 
   const colorScale = d3.scale
     .quantile()
@@ -85,5 +78,5 @@ export default function generateKeyboard(pressTimes) {
       .attr('y', gridSize / 2)
       .text(d => d.key)
 
-  return fauxKeyboard
+  return fauxKeyboard.toReact()
 }

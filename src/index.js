@@ -10,34 +10,39 @@ import keycode from 'keycode'
 import { Observable, DOM } from 'rx-dom'
 import intent from './intent'
 import model from './model'
+import createKeyboard from './graphs/keyboardGraph'
 
 const Root = Cycle.component('Root', function computer(interactions, props, self, lifecycles) {
-  const intention = intent(interactions, lifecycles)
-  const state$ = model(intention)
-  //return view(state$, interactions)
+  const windowSize$ = Observable.fromEvent(window, 'resize')
+    .map(ev => ({
+      height: ev.target.innerHeight,
+      width: ev.target.innerWidth,
+    }))
+    .throttle(50)
+    .startWith({ 
+      height: window.innerHeight,
+      width: window.innerWidth,
+    })
 
-  return state$
-    .map(([graph, prompt]) =>
+  const componentDidMount$ = lifecycles.componentDidMount
+  const graph$ = componentDidMount$
+    .flatMap(() => DOM.get('/api/keyboard'))
+    .map(data => JSON.parse(data.response))
+    .combineLatest(windowSize$, createKeyboard)
+
+  return graph$
+    .map(graph => 
       <div className="container">
         <header className="row">
-          <h1 className="col-12 title">Keystroke Profiler</h1>
+          <h1 className="col-12 title">keylio</h1>
+          <h3 className="col-12 sub-title">discover your unique typing style</h3>
         </header>
         <div className="row">
-          <div className="offset-3 col-6 prompt">{prompt}</div>
+          <div className="keyboard-container">{graph}</div>
         </div>
-        <div className="row">
-          <input
-            className="offset-3 col-6 promptInput"
-            type="text"
-            onKeyDown={interactions.listener('keydown')}
-            onKeyUp={interactions.listener('keyup')}
-          />
-        </div>
-        <div>{graph.toReact()}</div>
       </div>
     )
 })
-
 
 // function App(props) {
 //   return (

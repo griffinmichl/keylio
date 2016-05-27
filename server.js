@@ -4,8 +4,8 @@ const app = express()
 const PORT = process.env.PORT || 8080
 const randomWords = require('random-words')
 const db = require('./db/db')
-const { getLetter } = require('./db/model/dwell')
-
+const { incrementLetter, getAllLetters } = require('./db/model/dwell')
+const { median } = require('./util/util')
 
 // using webpack-dev-server and middleware in development environment
 if(process.env.NODE_ENV !== 'production') {
@@ -25,13 +25,30 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 })
 
-app.post('/api/test', (req, res) => {
+app.post('/api/dwell', (req, res) => {
   let body
   req.on('data', (chunk) => {
-    console.log('1')
     body += chunk
   })
-  req.on('end', () => console.log(body))
+  req.on('end', () => {
+          
+  })
+})
+
+app.get('/api/keyboard', (req, res) => {
+  getAllLetters((err, result) => {
+    const medians = Object.keys(result)
+      .reduce((mediansObject, char) => {
+        mediansObject[char] = median(result[char])
+        return mediansObject
+      }, {})
+
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.status(200).send(medians)
+    }
+  })
 })
 
 app.get('/api/prompt', (req, res) => {
@@ -52,10 +69,7 @@ db.connect(function(err) {
       if (error) {
         console.error(error)
       } else {
-        getLetter('a', (e, r) => {
-        console.log(e,r)
         console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT)
-        })
       }
     })
   }
