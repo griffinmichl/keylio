@@ -60,10 +60,10 @@ export default function intent(interactions, lifecycles) {
 
   const componentDidMount$ = lifecycles.componentDidMount
   const text$ = componentDidMount$
-    .startWith('')
     .flatMap(() => DOM.get('/api/prompt'))
     .map(data => data.response)
-  
+    .startWith('')
+
   return {
     keystroke$,
     text$,
