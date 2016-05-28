@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory } from 'react-router'
+import Prompt from './routes/Prompt/prompt'
 import Cycle from 'cycle-react'
 import classNames from 'classnames'
 import keycode from 'keycode'
@@ -8,11 +9,9 @@ import keycode from 'keycode'
 // and rx-dom once we know what methods we need
 // import { Observable } from 'rx'
 import { Observable, DOM } from 'rx-dom'
-import intent from './intent'
-import model from './model'
 import createKeyboard from './graphs/keyboardGraph'
 
-const Root = Cycle.component('Root', function computer(interactions, props, self, lifecycles) {
+const Home = Cycle.component('Home', function computer(interactions, props, self, lifecycles) {
   const windowSize$ = Observable.fromEvent(window, 'resize')
     .map(ev => ({
       height: ev.target.innerHeight,
@@ -37,8 +36,11 @@ const Root = Cycle.component('Root', function computer(interactions, props, self
           <h1 className="col-12 title">keylio</h1>
           <h3 className="col-12 sub-title">discover your unique typing style</h3>
         </header>
-        <div className="row">
+        <div className="row top-buffer">
           <div className="keyboard-container">{graph}</div>
+        </div>
+        <div className="row top-buffer">
+          <Link className="offset-5 col-2 btn btn-main" to="/prompt">Try It!</Link>
         </div>
       </div>
     )
@@ -66,14 +68,11 @@ const Root = Cycle.component('Root', function computer(interactions, props, self
 //   return <h5>Message</h5>
 // }
 //
-// ReactDOM.render((
-//   <Router history={browserHistory}>
-//     <Route path="/" component={App}>
-//       <Route path="/home" component={Home} />
-//       <Route path="/about" component={About} />
-//       <Route path="/message" component={Message} />
-//     </Route>
-//   </Router>
-//   ), document.querySelector('.app')
 
-ReactDOM.render(<Root />, document.querySelector('.app'))
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={Home} />
+    <Route path="/prompt" component={Prompt} />
+  </Router>
+  ), document.querySelector('.app'))
+

@@ -11,7 +11,7 @@ import { Observable, DOM } from 'rx-dom'
 import intent from './intent'
 import model from './model'
 
-const Root = Cycle.component('Root', function computer(interactions, props, self, lifecycles) {
+const Prompt = Cycle.component('Prompt', function computer(interactions, props, self, lifecycles) {
   const intention = intent(interactions, lifecycles)
   const state$ = model(intention)
   //return view(state$, interactions)
@@ -33,42 +33,9 @@ const Root = Cycle.component('Root', function computer(interactions, props, self
             onKeyUp={interactions.listener('keyup')}
           />
         </div>
-        <div>{graph.toReact()}</div>
       </div>
     )
 })
 
+export default Prompt
 
-// function App(props) {
-//   return (
-//     <div>
-//       <nav className="row">
-//         <Link className="col-3" to="/">Keystroke Profiler</Link>
-//         <Link activeClassName="active" className="col-1" to="/about">About</Link>
-//         <Link activeClassName="active" className="col-1" to="/message">Message</Link>
-//       </nav>
-//       {props.children}
-//     </div>
-//   )
-// }
-//
-//
-// function About(props) {
-//   return <h3>About</h3>
-// }
-//
-// function Message(props) {
-//   return <h5>Message</h5>
-// }
-//
-// ReactDOM.render((
-//   <Router history={browserHistory}>
-//     <Route path="/" component={App}>
-//       <Route path="/home" component={Home} />
-//       <Route path="/about" component={About} />
-//       <Route path="/message" component={Message} />
-//     </Route>
-//   </Router>
-//   ), document.querySelector('.app')
-
-ReactDOM.render(<Root />, document.querySelector('.app'))

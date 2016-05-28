@@ -1,5 +1,6 @@
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: #FEF6EB;
 }
 
 .container {
@@ -119,12 +120,14 @@ body {
 .title {
   text-align: center;
   margin-bottom: 0;
+  color: #C25B56;
+  font-weight: 700;
 }
 
 .sub-title {
   text-align: center;
   margin-top: 0;
-  color: grey;
+  color: #74828F;
 }
 
 .btn {
@@ -159,22 +162,15 @@ body {
   word-break: break-all;
 }
 
-nav {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid #e7e7e7;
-  background-color: #f3f3f3;
-}
-
-nav a {
-  color: #666;
-  padding: 1em;
+.btn {
+  text-align: center;
   text-decoration: none;
+  background-color: #96C0CE;
+  color: #525564;
+  border-radius: 1em;
 }
 
-nav a.active {
-  color: white;
-  background-color: #4CAF50;
+.top-buffer {
+  margin-top: 2em;
 }
 

@@ -5,7 +5,7 @@ import { processPressTimes, median } from '../util'
 
 export default function generateKeyboard(pressTimes, size) {
   const width = size.width / 1.7
-  const height = size.height
+  const height = width * (3 / 10)
   const gridSize = Math.floor(width / 10) //10 keys map for simple version
   // const legendElementHeight = gridSize*3
   // const buckets = 9 //number of color buckets. TODO: increase, update color scheme

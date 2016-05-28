@@ -1,10 +1,8 @@
 // TODO: refactor to immutable
 // import { Map, List } from 'immutable'
 import { Observable } from 'rx'
-import { characters } from './config'
-import Word from './components/word'
-import createDwellGraph from './graphs/dwellGraph'
-import createKeyboard from './graphs/keyboardGraph'
+import { characters } from '../../config'
+import Word from './word'
 
 function createStore(chars) {
   return chars.reduce((store, char) => {
@@ -15,13 +13,11 @@ function createStore(chars) {
 
 export default function appModel({ keystroke$, word$, text$ }) {
   const dwell$ = keystroke$
-    .do(x => console.log(x))
     .startWith(createStore(characters))
     .scan((store, keypress) => {
       store[keypress.key].push(keypress.dwell)
       return store
     })
-    .map(createKeyboard)
 
   const prompt$ = text$
     .map(text => text

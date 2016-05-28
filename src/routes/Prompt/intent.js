@@ -1,6 +1,6 @@
 import { Observable } from 'rx'
 import R from 'ramda'
-import { characters } from './config'
+import { characters } from '../../config'
 import keycode from 'keycode'
 import { DOM } from 'rx-dom'
 
@@ -34,7 +34,6 @@ export default function intent(interactions, lifecycles) {
     .get('keydown')
     .map(parseKeyEvent)
     .distinctUntilChanged(ev => ev.key)
-  keydown1$.subscribe(x => console.log('keydown', x))
 
   const keystroke$ = characters.reduce((acc$, char) =>
     acc$.merge(Observable.zip(
@@ -43,9 +42,12 @@ export default function intent(interactions, lifecycles) {
       keyup$
         .filter(ev => ev.key === char)
     )), Observable.empty())
-    .do(console.log.bind(console))
-    .map(getDwellTime)
-/*
+  const componentDidMount$ = lifecycles.componentDidMount
+  const text$ = componentDidMount$
+    .flatMap(() => DOM.get('/api/prompt'))
+    .map(data => data.response)
+    .startWith('')
+
   const char$ = keyup$
     .map(keycode)
     .filter(char => characters.includes(char))
@@ -56,17 +58,10 @@ export default function intent(interactions, lifecycles) {
 
   const word$ = char$.buffer(() => space$)
 
-*/
-
-  const componentDidMount$ = lifecycles.componentDidMount
-  const text$ = componentDidMount$
-    .flatMap(() => DOM.get('/api/prompt'))
-    .map(data => data.response)
-    .startWith('')
-
   return {
     keystroke$,
     text$,
+    word$,
   }
 }
 
