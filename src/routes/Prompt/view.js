@@ -1,28 +1,33 @@
-import Cycle from 'cycle-react'
-import { Observable } from 'rx'
-
-const Graph = Cycle.component('App', (interactions) => {
-  const keydown$ = interactions.get('keydown')
-  const keyup$ = interactions.get('keyup')
-  return {
-    view: Observable.just(
-      <div className='container'
-           onKeyDown={ interactions.listener('keydown') }
-           onKeyUp={ interactions.listener('keyup') }>
-      </div> 
-    ),
-    events: {
-      keydown$,
-      keyup$,
-    },
-  }
-})
-
-
-function appView(item$, interactions) {
-  return item$.map(function renderElements(itemsData) {
-    return <div>Test</div>
-  })
+function view(state$, interactions) {
+  return state$
+    .map(([graph, prompt]) =>
+      <div className="container">
+        <header className="row">
+          <h1 className="col-12 title">keylio</h1>
+          <h3 className="col-12 sub-title">discover your unique typing style</h3>
+        </header>
+        <div className="row">
+          <div className="offset-3 col-6 prompt">
+            <div className="prompt-text">
+              {prompt}
+            </div>
+            <div className="prompt-input">
+              <input
+                type="text"
+                placeholder="type the words here"
+                onKeyDown={interactions.listener('keydown')}
+                onKeyUp={interactions.listener('keyup')}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <p className="offset-2 col-8 sub-title top-buffer">
+            when you finish the prompt, we'll automatically generate your stats
+          </p>
+        </div>
+      </div>
+    )
 }
 
-export default appView
+export default view
