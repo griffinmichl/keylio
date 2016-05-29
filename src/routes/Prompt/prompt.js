@@ -20,18 +20,21 @@ const Prompt = Cycle.component('Prompt', function computer(interactions, props, 
     .map(([graph, prompt]) =>
       <div className="container">
         <header className="row">
-          <h1 className="col-12 title">Keystroke Profiler</h1>
+          <h1 className="col-12 title">keylio</h1>
         </header>
-        <div className="row">
-          <div className="offset-3 col-6 prompt">{prompt}</div>
-        </div>
-        <div className="row">
-          <input
-            className="offset-3 col-6 promptInput"
-            type="text"
-            onKeyDown={interactions.listener('keydown')}
-            onKeyUp={interactions.listener('keyup')}
-          />
+        <div className="row top-buffer">
+          <div className="offset-3 col-6 prompt">
+            <div className="prompt-text">
+              {prompt}
+            </div>
+            <div className="prompt-input">
+              <input
+                type="text"
+                onKeyDown={interactions.listener('keydown')}
+                onKeyUp={interactions.listener('keyup')}
+              />
+            </div>
+          </div>
         </div>
       </div>
     )

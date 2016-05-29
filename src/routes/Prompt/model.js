@@ -11,7 +11,7 @@ function createStore(chars) {
   }, {})
 }
 
-export default function appModel({ keystroke$, word$, text$ }) {
+export default function appModel({ keystroke$, wordCount$, text$ }) {
   const dwell$ = keystroke$
     .startWith(createStore(characters))
     .scan((store, keypress) => {
@@ -19,11 +19,15 @@ export default function appModel({ keystroke$, word$, text$ }) {
       return store
     })
 
+  // TODO: highlight correct/incorrect words + letters
   const prompt$ = text$
-    .map(text => text
-      .split(' ')
-      .map((word, index) => Word({ word, key: index } )) 
+    .map(text => text.split(' '))
+    .combineLatest(wordCount$, (prompt, wordIndex) => 
+      prompt.map((pWord, pIndex) =>
+        Word({ word: pWord, key: pIndex, selected: pIndex === wordIndex })
+      )
     )
+
 /*
   const promptWord$ = text$
     .flatMap(text => Observable.from(text.split(' '))
