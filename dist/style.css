@@ -1,6 +1,13 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #FEF6EB;
+  font-size: 24px;
+}
+
+input {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  text-align: center;
 }
 
 .container {
@@ -135,13 +142,27 @@ body {
 }
 
 .word {
-  font-size: 120%;
   padding: 0 0.2em;
 }
 
 .selected {
   background-color: LightGreen;
-  border-radius: 15%;
+  border-radius: 0.5em;
+}
+
+.prompt-input > input {
+  width: 100%;
+  height: 2em;
+  border-radius: 0.5em;
+  border: none;
+}
+
+.prompt-input > input:hover {
+  outline: none;
+}
+
+.prompt-text {
+  border-bottom: 0.2em solid black;
 }
 
 .keyboard {
@@ -160,6 +181,9 @@ body {
 .prompt {
   overflow: hidden;
   word-break: break-all;
+  background-color: white;
+  border: 0.2em solid black;
+  border-radius: 0.5em;
 }
 
 .btn {
