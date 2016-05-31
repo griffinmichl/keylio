@@ -28,14 +28,5 @@ export default function model({ keystroke$, wordCount$, text$ }) {
       )
     )
 
-/*
-  const promptWord$ = text$
-    .flatMap(text => Observable.from(text.split(' '))
-
-  const classedWord$ = promptWord$
-    .withLatestFrom(word$, (promptWord, typedWord) => {
-
-    })
-*/
   return dwell$.combineLatest(prompt$)
 }

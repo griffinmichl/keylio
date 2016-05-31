@@ -40,34 +40,12 @@ const Home = Cycle.component('Home', function computer(interactions, props, self
           <div className="keyboard-container">{graph}</div>
         </div>
         <div className="row top-buffer">
-          <Link className="offset-5 col-2 btn btn-main" to="/prompt">Try It!</Link>
+          <Link className="offset-3 col-2 btn btn-main" to="/prompt">Try It!</Link>
+          <Link className="offset-2 col-2 btn btn-main" to="/prompt">About</Link>
         </div>
       </div>
     )
 })
-
-// function App(props) {
-//   return (
-//     <div>
-//       <nav className="row">
-//         <Link className="col-3" to="/">Keystroke Profiler</Link>
-//         <Link activeClassName="active" className="col-1" to="/about">About</Link>
-//         <Link activeClassName="active" className="col-1" to="/message">Message</Link>
-//       </nav>
-//       {props.children}
-//     </div>
-//   )
-// }
-//
-//
-// function About(props) {
-//   return <h3>About</h3>
-// }
-//
-// function Message(props) {
-//   return <h5>Message</h5>
-// }
-//
 
 ReactDOM.render((
   <Router history={browserHistory}>
