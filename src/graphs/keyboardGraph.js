@@ -4,6 +4,7 @@ import d3 from 'd3'
 import { processPressTimes, median } from '../util'
 
 export default function generateKeyboard(pressTimes, size) {
+  size = size || { width: 960, height: 50 }
   const width = size.width / 1.7
   const height = width * (3 / 10)
   const gridSize = Math.floor(width / 10) //10 keys map for simple version

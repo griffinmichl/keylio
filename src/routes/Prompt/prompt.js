@@ -1,16 +1,34 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router'
 import Cycle from 'cycle-react'
-import intent from './intent'
-import model from './model'
-import view from './view'
 
-const Prompt = Cycle.component('Prompt', function computer(interactions, props, self, lifecycles) {
-  const intention = intent(interactions, lifecycles)
-  const state$ = model(intention)
-  return view(state$, interactions)
+const Prompt = Cycle.component('Prompt', function (interactions, props) {
+  const vtree$ = props
+    .get('content')
+    .map(content =>
+      <div className="row">
+        <div className="offset-3 col-6 prompt">
+          <div className="prompt-text">
+            {content}
+          </div>
+          <div className="prompt-input">
+            <input
+              type="text"
+              placeholder="type words here"
+              onKeyDown={interactions.listener('keydown')}
+              onKeyUp={interactions.listener('keyup')}
+            />
+          </div>
+        </div>
+      </div>
+    )
 
-})
+  return {
+    view: vtree$,
+    events: {
+      keydown: interactions.get('keydown'),
+      keyup: interactions.get('keyup'),
+    },
+  }
+});
 
 export default Prompt
+

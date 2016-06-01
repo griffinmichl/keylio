@@ -67,5 +67,5 @@ export default function createDwellGraph(data) {
   // // .text('Average Press Time');
 
   chart.append('text').attr('x', width / 2).attr('y', 0 - margin.top / 2).attr('text-anchor', 'middle').style('font-size', '16').text('Keystroke Dwell Time');
-  return fauxChart
+  return fauxChart.toReact()
 };

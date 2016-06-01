@@ -165,11 +165,6 @@ input {
   border-bottom: 0.2em solid black;
 }
 
-.keyboard {
-  display: block;
-  margin: 0 auto;
-}
-
 .correct {
   color: green;
 }
@@ -197,4 +192,26 @@ input {
 .top-buffer {
   margin-top: 2em;
 }
+
+/*
+-------Graph Styling--------
+*/
+.keyboard {
+  display: block;
+  margin: 0 auto;
+}
+
+.cell-hover {
+  stroke: #F00;
+  stroke-width:2px;
+}
+
+.highlighted {
+  fill: #c00;
+  font-weight: bold;
+}
+
+
+
+
 

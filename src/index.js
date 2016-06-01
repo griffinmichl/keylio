@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory } from 'react-router'
-import Prompt from './routes/Prompt/prompt'
+import Prompt from './routes/Prompt/index'
 import Cycle from 'cycle-react'
 import classNames from 'classnames'
 import keycode from 'keycode'

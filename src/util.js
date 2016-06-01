@@ -28,3 +28,17 @@ export function processPressTimes(obj) {
       }
     }, [])
 }
+
+export function processTransitionTimes(obj) {
+  return Object
+    .keys(obj)
+    .reduce((arr, fromKey) =>
+      arr.concat(Object.keys(obj[fromKey])
+        .reduce((fromArr, toKey) => {
+          const value = median(obj[fromKey][toKey]) || 0
+          fromArr.push({ fromKey, toKey, value })
+          return fromArr
+        }, [])
+      )
+    , [])
+}

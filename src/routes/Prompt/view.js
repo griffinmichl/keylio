@@ -1,27 +1,16 @@
+import Prompt from './prompt'
+
 function view(state$, interactions) {
   return state$
-    .map(([graph, prompt]) =>
+    .map(({keyboard, prompt, heatmap}) =>
       <div className="container">
         <header className="row">
           <h1 className="col-12 title">keylio</h1>
           <h3 className="col-12 sub-title">discover your unique typing style</h3>
         </header>
+        {keyboard === null ? <Prompt content={prompt} keydown={interactions.listener('keydown')} keyup={interactions.listener('keyup')} /> : keyboard}
         <div className="row">
-          <div className="offset-3 col-6 prompt">
-            <div className="prompt-text">
-              {prompt}
-            </div>
-            <div className="prompt-input">
-              <input
-                type="text"
-                placeholder="type the words here"
-                onKeyDown={interactions.listener('keydown')}
-                onKeyUp={interactions.listener('keyup')}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
+        {heatmap === null ? "test" : heatmap}
           <p className="offset-2 col-8 sub-title top-buffer">
             when you finish the prompt, we'll automatically generate your stats
           </p>
