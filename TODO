@@ -1,6 +1,6 @@
 # TODO
 ## Near Term
-- Add mongodb support for transitions data
+- Add support for querying transition data (server and client)
 - Post user data to server
 - Create 'About' page w/ universal graphs + description
 - Write project readme
@@ -8,6 +8,7 @@
 - Add keys/legends to graphs
 - Center characters on keyboard graph
 - Remove placeholder in input field after first input
+- Make user graphs responsive like landing page
 
 ## Mid Term
 - Add more specific highlighting to prompt text
@@ -16,6 +17,7 @@
 - Add redis to quickly server up summy statistics for past users
 - Incorporate docker into deployment
 - Add support for mouseovers on graphs (tricky with react-faux-dom)
+- Add tests
 
 ## Long Term
 - Show real time data as it comes in
