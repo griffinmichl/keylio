@@ -1,0 +1,20 @@
+# TODO
+## Near Term
+- Add mongodb support for transitions data
+- Post user data to server
+- Create 'About' page w/ universal graphs + description
+- Write project readme
+- Only show one word at a time in prompt input field
+- Deploy on digital ocean
+- Add support for mouseovers on graphs (tricky with react-faux-dom)
+
+## Mid Term
+- Add more specific highlighting to prompt text
+- Support backspaces in prompt field
+- Implement worker service to calculate summary statistics
+- Add redis to quickly server up summy statistics for past users
+- Incorporate docker into deployment
+
+## Long Term
+- Show real time data as it comes in
+
