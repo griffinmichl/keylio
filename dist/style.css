@@ -201,6 +201,11 @@ input {
   margin: 0 auto;
 }
 
+.transition-graph {
+  display: block;
+  margin: 0 auto;
+}
+
 .cell-hover {
   stroke: #F00;
   stroke-width:2px;

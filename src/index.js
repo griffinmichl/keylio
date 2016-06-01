@@ -36,7 +36,7 @@ const Home = Cycle.component('Home', function computer(interactions, props, self
           <h1 className="col-12 title">keylio</h1>
           <h3 className="col-12 sub-title">discover your unique typing style</h3>
         </header>
-        <div className="row top-buffer">
+        <div className="row">
           <div className="keyboard-container">{graph}</div>
         </div>
         <div className="row top-buffer">

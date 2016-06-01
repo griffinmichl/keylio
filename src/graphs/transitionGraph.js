@@ -19,7 +19,7 @@ export default function generateTransitionGraph(data) {
 
   const svg = d3
     .select(fauxTransitionGraph)
-    .attr('class', 'transitionChart')
+    .attr('class', 'transition-graph')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
