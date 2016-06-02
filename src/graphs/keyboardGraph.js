@@ -52,7 +52,7 @@ export default function generateKeyboard(pressTimes, size) {
 
   const colorScale = d3.scale
     .quantile()
-    .domain([d3.min(processedPressTimes, d => d.value), d3.max(processedPressTimes, d => d.value)])
+    .domain([d3.min(processedPressTimes.filter(d => d.value !== 0), d => d.value), d3.max(processedPressTimes, d => d.value)])
     .range(colors)
 
   const keys = svg

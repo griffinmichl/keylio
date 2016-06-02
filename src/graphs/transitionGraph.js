@@ -59,7 +59,7 @@ export default function generateTransitionGraph(data) {
   //todo: ensure domain is correct
   const colorScale = d3.scale
     .quantile()
-    .domain([d3.min(transitionData, d => d.value), d3.max(transitionData, d => d.value)])
+    .domain([d3.min(transitionData.filter(d => d.value !== 0), d => d.value), d3.max(transitionData, d => d.value)])
     .range(colors)
 
   const transitions = svg.selectAll('.transition')
