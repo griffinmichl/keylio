@@ -40,7 +40,6 @@ export default function generateKeyboard(pressTimes, size) {
                     {key: 'm', row: 2, col: 6}]
 
   const processedPressTimes = processPressTimes(pressTimes)
-
   const fauxKeyboard = ReactFauxDOM.createElement('svg')
 
   const svg = d3
@@ -65,12 +64,13 @@ export default function generateKeyboard(pressTimes, size) {
       return `translate(${d.col * gridSize + d.row * gridSize * 0.35}, ${d.row * gridSize})`
     })
 
+  // TODO: optimize lookup of key and value for color generation
   keys.append('rect')
       .attr('width', gridSize)
       .attr('height', gridSize)
       .style('fill', d => {
-        const times = pressTimes[d.key]
-        return times.length > 0 ? colorScale(median(times)) : 'white'
+        const { key, value } = processedPressTimes.find(datum => datum.key === d.key)
+        return value > 0 ? colorScale(value) : 'white'
       })
       .style('stroke', 'black')
 

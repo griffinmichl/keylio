@@ -1,12 +1,12 @@
 const db = require('./db')
 
+// TODO: customize update callbacks to handle errors better
 exports.incrementLetter = (char, time, cb) => {
   const collection = db.get().collection('dwell')
   const address = `times.${time}`
 
   collection
-    .update({ character: char }, { $inc: { [address]: 1 } })
-    .exec(cb)
+    .update({ character: char }, { $inc: { [address]: 1 } }, cb)
 }
 
 exports.incrementTransition = (from, to, time, cb) => {
@@ -15,8 +15,7 @@ exports.incrementTransition = (from, to, time, cb) => {
   const address = `times.${time}`
 
   collection
-    .update({ characters: transitionChars }, { $in: { [address]: 1 } })
-    .exec(cb)
+    .update({ characters: transitionChars }, { $in: { [address]: 1 } }, cb)
 }
 
 exports.getAllLetters = (cb) => {

@@ -1,11 +1,14 @@
 const path = require('path')
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
 const PORT = process.env.PORT || 8080
 const randomWords = require('random-words')
 const db = require('./db/db')
 const { incrementLetter, getAllLetters } = require('./db/model')
 const { median } = require('./util/util')
+const { each: asyncEach } = require('async')
 
 // using webpack-dev-server and middleware in development environment
 if(process.env.NODE_ENV !== 'production') {
@@ -19,6 +22,10 @@ if(process.env.NODE_ENV !== 'production') {
   app.use(webpackHotMiddleware(compiler))
 }
 
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req, res) => {
@@ -26,13 +33,30 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/dwell', (req, res) => {
-  let body
-  req.on('data', (chunk) => {
-    body += chunk
-  })
-  req.on('end', () => {
-          
-  })
+  const dwellData = req.body
+  asyncEach(Object.keys(dwellData), (key, outercb) => {
+    asyncEach(dwellData[key], (time, innercb) => {
+      incrementLetter(key, time, innercb)
+    }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        outercb()        
+      }
+    })
+
+  }, (err) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.sendStatus(201)
+    }
+  }) 
+})
+
+app.post('/api/transition', (req, res) => {
+  
+
 })
 
 app.get('/api/keyboard', (req, res) => {
