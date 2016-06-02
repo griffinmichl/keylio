@@ -1,4 +1,4 @@
-const db = require('../db')
+const db = require('./db')
 
 exports.incrementLetter = (char, time, cb) => {
   const collection = db.get().collection('dwell')

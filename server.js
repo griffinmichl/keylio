@@ -4,7 +4,7 @@ const app = express()
 const PORT = process.env.PORT || 8080
 const randomWords = require('random-words')
 const db = require('./db/db')
-const { incrementLetter, getAllLetters } = require('./db/model/dwell')
+const { incrementLetter, getAllLetters } = require('./db/model')
 const { median } = require('./util/util')
 
 // using webpack-dev-server and middleware in development environment
