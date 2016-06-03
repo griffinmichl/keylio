@@ -7,7 +7,7 @@
     "test": "npm run test",
     "build": "webpack --config ./webpack.prod.config.js --progress --colors",
     "clean": "rm -rf build/",
-    "deploy": "git checkout prod && git push live master",
+    "deploy": "git push live master",
     "start": "nodemon server.js",
     "postinstall": "webpack -p --config webpack.prod.config.js"
   },
