@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
+    "build": "./node_modules/.bin/webpack --config ./webpack.prod.config.js --progress --colors",
     "clean": "rm -rf build/",
     "deploy": "git push live master",
     "start": "nodemon server.js",
-    "postinstall": "webpack -p --config webpack.prod.config.js"
+    "postinstall": "./node_modules/.bin/webpack -p --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
