@@ -10,7 +10,6 @@ const TryIt = Cycle.component('TryIt', function computer(interactions, props, se
   const intention = intent(interactions, lifecycles)
   const state$ = model(intention)
   return view(state$, interactions)
-
 })
 
 export default TryIt

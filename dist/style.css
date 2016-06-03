@@ -127,8 +127,15 @@ input {
 .title {
   text-align: center;
   margin-bottom: 0;
+  margin-top: 10px;
   color: #C25B56;
   font-weight: 700;
+  cursor: auto;
+}
+
+.title > a {
+  text-decoration: none;
+  color: #C25B56;
 }
 
 .sub-title {
@@ -215,8 +222,5 @@ input {
   fill: #c00;
   font-weight: bold;
 }
-
-
-
 
 

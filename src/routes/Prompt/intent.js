@@ -22,7 +22,7 @@ function getTransitionTime([from, to]) {
 function parseKeyEvent(e) {
   return {
     key: keycode(e),
-    time: e.timeStamp,
+    time: Math.floor(e.timeStamp),
   }
 }
 

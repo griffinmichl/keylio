@@ -1,6 +1,6 @@
 // TODO: refactor to immutable
 // import { Map, List } from 'immutable'
-import { Observable } from 'rx'
+import { Observable, DOM } from 'rx-dom'
 import { characters } from '../../config'
 import Word from './word'
 import createKeyboard from '../../graphs/keyboardGraph'
@@ -23,8 +23,8 @@ function create2DStore(chars) {
 export default function model({ keystroke$, wordCount$, text$, transition$ }) {
 
   const finished$ = text$
-    //.map(text => text.split(' ').length)
-    .map(x => 5)
+    .map(text => text.split(' ').length)
+    //.map(x => 5)
     .combineLatest(wordCount$)
     .filter(([words, count]) => words === count)
     .map(x => 1)
@@ -36,6 +36,17 @@ export default function model({ keystroke$, wordCount$, text$, transition$ }) {
       return store
     })
     .skipUntil(finished$)
+    .do(store => {
+      console.log(store)
+      DOM.ajax({
+        url: '/api/dwell',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(store),
+      }).subscribe(x => console.log(x))
+    })
     .map(createKeyboard)
     .startWith(null)
 
