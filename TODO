@@ -1,14 +1,15 @@
 # TODO
 ## Near Term
 - Add support for querying transition data (server and client)
-- Post user data to server
-- Create 'About' page w/ universal graphs + description
-- Write project readme
-- Deploy on digital ocean
+- Post transition data to server
+- Populate 'About' page w/ universal graphs + description
+- Expand project readme (in progress)
+- Deploy on digital ocean (in progress)
 - Add keys/legends to graphs
 - Center characters on keyboard graph
 - Remove placeholder in input field after first input
 - Make user graphs responsive like landing page
+- Look into responsiveness via css
 
 ## Mid Term
 - Add more specific highlighting to prompt text
