@@ -37,7 +37,6 @@ export default function model({ keystroke$, wordCount$, text$, transition$ }) {
     })
     .skipUntil(finished$)
     .do(store => {
-      console.log(store)
       DOM.ajax({
         url: '/api/dwell',
         method: 'POST',
