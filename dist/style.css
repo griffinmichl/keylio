@@ -148,10 +148,6 @@ input {
 
 }
 
-.word {
-  padding: 0 0.2em;
-}
-
 .selected {
   background-color: LightGreen;
   border-radius: 0.5em;
@@ -182,7 +178,7 @@ input {
 
 .prompt {
   overflow: hidden;
-  word-break: break-all;
+  text-align: justify;
   background-color: white;
   border: 0.2em solid black;
   border-radius: 0.5em;

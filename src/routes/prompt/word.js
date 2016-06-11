@@ -5,7 +5,7 @@ function Word({ word, key, selected }) {
     'word': true,
     'selected': !!selected,
   })
-  return <span key={key} className={wordClass}>{word}</span>
+  return <span><span key={key} className={wordClass}>{word}</span> </span>
 }
 
 export default Word
