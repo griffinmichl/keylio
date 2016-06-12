@@ -40,4 +40,4 @@ jspm_packages
 *.swp
 
 #OSX
-#.DS_STORE
+.DS_STORE

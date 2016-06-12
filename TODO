@@ -4,7 +4,6 @@
 - Post transition data to server
 - Populate 'About' page w/ universal graphs + description
 - Expand project readme (in progress)
-- Deploy on digital ocean (in progress)
 - Add keys/legends to graphs
 - Center characters on keyboard graph
 - Remove placeholder in input field after first input
