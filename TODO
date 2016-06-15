@@ -1,7 +1,6 @@
 # TODO
 ## Near Term
 - Add support for querying transition data (server and client)
-- Post transition data to server
 - Populate 'About' page w/ universal graphs + description
 - Expand project readme (in progress)
 - Add keys/legends to graphs
