@@ -66,6 +66,16 @@ export default function model({ keystroke$, wordCount$, text$, transition$ }) {
       return store
     })
     .skipUntil(finished$)
+    .do(store => {
+      DOM.ajax({
+        url: '/api/transition',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(store),
+      }).subscribe(x => console.log(x))
+    })
     .map(createTransitionGraph)
     .startWith(null)
 

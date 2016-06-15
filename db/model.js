@@ -15,7 +15,7 @@ exports.incrementTransition = (from, to, time, cb) => {
   const address = `times.${time}`
 
   collection
-    .update({ characters: transitionChars }, { $in: { [address]: 1 } }, cb)
+    .update({ characters: transitionChars }, { $inc: { [address]: 1 } }, cb)
 }
 
 exports.getAllLetters = (cb) => {

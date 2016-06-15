@@ -6,7 +6,11 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080
 const randomWords = require('random-words')
 const db = require('./db/db')
-const { incrementLetter, getAllLetters } = require('./db/model')
+const {
+  incrementLetter,
+  getAllLetters,
+  incrementTransition,
+} = require('./db/model')
 const { median } = require('./util/util')
 const { each: asyncEach } = require('async')
 
@@ -54,8 +58,20 @@ app.post('/api/dwell', (req, res) => {
 })
 
 app.post('/api/transition', (req, res) => {
-  
-
+  const dwellData = req.body
+  asyncEach(Object.keys(dwellData), (from, outercb) => {
+    asyncEach(Object.keys(dwellData[from]), (to, middlecb) => {
+      asyncEach(dwellData[from][to], (time, innercb) => {
+        incrementTransition(from, to, time, innercb)
+      }, err => err ? console.log(err) : middlecb())
+    }, err => err ? console.log(err) : outercb())
+  }, (err) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.sendStatus(201)
+    }
+  }) 
 })
 
 app.get('/api/keyboard', (req, res) => {
