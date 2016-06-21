@@ -1,6 +1,5 @@
 # TODO
 ## Near Term
-- Make sure keyl.io (w/o www) directs users to www.keyl.io
 - Add support for querying transition data (server and client)
 - Populate 'About' page w/ universal graphs + description
 - Expand project readme (in progress)
