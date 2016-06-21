@@ -10,6 +10,7 @@ const {
   incrementLetter,
   getAllLetters,
   incrementTransition,
+  getAllTransitions,
 } = require('./db/model')
 const { median } = require('./util/util')
 const { each: asyncEach } = require('async')
@@ -81,6 +82,24 @@ app.get('/api/keyboard', (req, res) => {
         mediansObject[char] = median(result[char])
         return mediansObject
       }, {})
+
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.status(200).send(medians)
+    }
+  })
+})
+
+app.get('/api/transition', (req, res) => {
+  getAllTransitions((err, result) => {
+    const medians = {}
+    for (let fromKey in result) {
+      for (let toKey in result[fromKey]) {
+        medians[fromKey] = medians[fromKey] || {}
+        medians[fromKey][toKey] = median(result[fromKey][toKey])
+      }
+    }
 
     if (err) {
       res.sendStatus(500)

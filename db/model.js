@@ -36,7 +36,7 @@ exports.getAllLetters = (cb) => {
   })
 }
 
-exports.getAllTransitions = (db) => {
+exports.getAllTransitions = (cb) => {
   const collection = db.get().collection('transition')
   collection.find().toArray((err, result) => {
     if (err) {
@@ -45,8 +45,8 @@ exports.getAllTransitions = (db) => {
     } else {
       const countData = result.reduce((countObj, currentObj) => {
         const { characters } = currentObj
-        const from = characters.split[0]
-        const to = characters.split[1]
+        const from = characters.split('.')[0]
+        const to = characters.split('.')[1]
         if (!countObj.hasOwnProperty(from)) {
           countObj[from] = {}  
         }
