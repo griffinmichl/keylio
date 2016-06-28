@@ -6,6 +6,9 @@ We spend different amounts of time holding down keys and transitioning from one 
 Some research even suggests that the way we type could even be used to identify us, like a fingerprint.
 This app was created as a fun way for people to learn about their typing style while building a profile of the 'human typing genome'
 
+## Try It Live
+www.keyl.io (work in progress)
+
 ## Tech
 ### Front End
 - Cycle-react

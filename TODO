@@ -3,7 +3,6 @@
 - Populate 'About' page w/ universal graphs + description
 - Expand project readme (in progress)
 - Add keys/legends to graphs
-- Center characters on keyboard graph
 - Remove placeholder in input field after first input
 - Make user graphs responsive like landing page
 - Look into responsiveness via css
