@@ -75,8 +75,9 @@ export default function generateKeyboard(pressTimes, size) {
       .style('stroke', 'black')
 
   keys.append('text')
-      .attr('x', gridSize / 2)
-      .attr('y', gridSize / 2)
+      .attr('x', gridSize / 2 - Math.floor(gridSize / 3) / 3)
+      .attr('y', gridSize / 2 + Math.floor(gridSize / 3) / 4)
+      .style('font-size', `${Math.floor(gridSize / 3)}px`)
       .text(d => d.key)
 
   return fauxKeyboard.toReact()
