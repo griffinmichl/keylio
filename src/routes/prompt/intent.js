@@ -75,20 +75,17 @@ export default function intent(interactions, lifecycles) {
     .map((_, i) => i + 1)
     .startWith(0)
 
-/*
-  const word$ = char$
-    .buffer(() => space$)
-    .map((chars, index) => ({
-      index,
-      word: chars.join(''),
-    }))
-*/
+  const submit$ = interactions
+    .get('keydown')
+    .map(keycode)
+    .filter(key => key === 'enter')
 
   return {
     keystroke$,
     text$,
     wordCount$,
     transition$,
+    submit$,
   }
 }
 

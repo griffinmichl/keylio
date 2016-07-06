@@ -20,14 +20,14 @@ function create2DStore(chars) {
   }, {})
 }
 
-export default function model({ keystroke$, wordCount$, text$, transition$ }) {
+export default function model({ keystroke$, wordCount$, text$, transition$, submit$ }) {
 
   const finished$ = text$
     .map(text => text.split(' ').length)
-    //.map(x => 5)
     .combineLatest(wordCount$)
     .filter(([words, count]) => words === count)
-    .map(x => 1)
+    .merge(submit$)
+    .map(() => 1)
 
   const dwell$ = keystroke$
     .startWith(create1DStore(characters))
@@ -35,8 +35,9 @@ export default function model({ keystroke$, wordCount$, text$, transition$ }) {
       store[keypress.key].push(keypress.dwell)
       return store
     })
-    .skipUntil(finished$)
+    .zip(finished$, (store, _) => store)
     .do(store => {
+      console.log(store)
       DOM.ajax({
         url: '/api/dwell',
         method: 'POST',
@@ -65,7 +66,7 @@ export default function model({ keystroke$, wordCount$, text$, transition$ }) {
       store[from][to].push(time)
       return store
     })
-    .skipUntil(finished$)
+    .zip(finished$, (store, _) => store)
     .do(store => {
       DOM.ajax({
         url: '/api/transition',

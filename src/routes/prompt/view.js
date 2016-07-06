@@ -12,7 +12,7 @@ function view(state$, interactions) {
         </div>
         <div className="row">
           <p className="offset-2 col-8 sub-title top-buffer">
-            when you finish the prompt, we'll automatically generate your stats
+            You can view your stats by finishing the prompt or pressing `enter`
           </p>
         </div>
       </div>
